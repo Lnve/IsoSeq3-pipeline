@@ -14,7 +14,7 @@ The second follow-up analysis uses the tool [PASA](https://github.com/PASApipeli
 The tool transdecoder [Transdecoder](https://github.com/TransDecoder/TransDecoder/wiki) identifies potential coding regions within the transcript sequences. Note, that the ```--complete_orfs_only``` flag will be used per default.
 
 # How to install
-To run the pipeline, create a snakemake 7 environment with the following command: ```mamba create -n snakemake7 snakemake=7.22 python=3.11```.\\
+To run the pipeline, create a snakemake 7 environment with the following command: ```mamba create -n snakemake7 snakemake=7.22 python=3.11```<br>
 Activate it using ```mamba activate snakemake7```
 
 TODO:
@@ -34,6 +34,7 @@ The main configurations of all inputs and the main analysis tools are defined vi
   - ```ref_annotations```: path to reference annotations. required patterns are ```{sample}``` (corresponding to the ones specified in the general setup) and ```{tool}```, defining one or more techiques which were used to generate the respective reference annotation type. This allows to run follow up analyses with different reference analyses (used in follow up 1 and 2)
   - ```barcodes```: barcode file, defining the sequences of 5``` and 3``` barcoded primers in fasta format. See the [PacBio CLI-workflow]https://isoseq.how/clustering/cli-workflow.html) for more details (required in the initial Isoform identification)
   - ```biosamples```: One file per ```{pool}```, mapping the primer IDs to the sample name in the SMRT-cell run. See the [Lima documentation](https://lima.how/faq/biosample.html) for more information (required in the initial Isoform identification)
+  - ```pasa_align_cfg```: path to documentation
   - ```pasa_align_cfg```: path to documentation
 
 ### CCS
