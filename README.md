@@ -22,7 +22,11 @@ For Sqanti,follow the official [installation instructions](https://github.com/Co
 Next, create the working directory you want to run the pipeline in and copy the following files to this directory:
 - ```Snakefile```
 - ```config_template.yml```
-And specify the paths to required input fields for the different steps of the pipeline.
+Then, copy the following folders with all files to the same directory:
+- ```rules/```
+- ```scripts/```
+  
+And last, specify the paths to required input fields for the different steps of the pipeline.
 
 # Config file
 The main configurations of all inputs and the main analysis tools are defined via a config file (```config_template.yaml```). An example is provided in the ```config_template_example.yaml```.
@@ -64,13 +68,13 @@ The main configurations of all inputs and the main analysis tools are defined vi
 ```version```: If several collapsing parameters are tested (one at a time), a version can be specified (default "v1"). A subfolder will be created in the output directory for every version, in which all subsequent steps are stored.
 
 ### Sqanti
-sqanti
-
+  - ```sqanti_path```: path to sqanti_qc.py
+    
 ### PASA
-```pasa_set```: The parameter set used by PASA to integrate the isoforms into the reference annotations. Parameters are specified with ```pasa_params```
-```pasa_params```:TODO
-```config_align```: path/to/pasa.alignAssembly.Template.txt
-```config_compare```: path/to/pasa.annotationCompare.Template.txt
+  - ```pasa_set```: The parameter set used by PASA to integrate the isoforms into the reference annotations. Parameters are specified with ```pasa_params```
+  - ```pasa_params```:TODO
+  - ```config_align```: path/to/pasa.alignAssembly.Template.txt
+  - ```config_compare```: path/to/pasa.annotationCompare.Template.txt
 
 ### Run
 Specify the config file to use on top of the ```Snakefile``` and then start the pipeline with the following command:
