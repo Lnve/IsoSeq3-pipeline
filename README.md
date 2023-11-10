@@ -14,7 +14,7 @@ The second follow-up analysis uses the tool [PASA](https://github.com/PASApipeli
 The tool transdecoder [Transdecoder](https://github.com/TransDecoder/TransDecoder/wiki) identifies potential coding regions within the transcript sequences. Note, that the ```--complete_orfs_only``` flag will be used per default.
 
 # How to install
-To run the pipeline, create a snakemake 7 environment with the following command: ```mamba create -n snakemake7 snakemake=7.22 python=3.11```<br>
+To run the pipeline, create a snakemake 7 environment with the following command: ```mamba create -n snakemake7 snakemake=7.22 python=3.11```\
 Activate it using ```mamba activate snakemake7```
 
 TODO:
