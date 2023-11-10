@@ -27,7 +27,7 @@ Then, copy the following folders with all files to the same directory:
 - ```rules/```
 - ```scripts/```
   
-And last, specify the paths to required input fields for the different steps of the pipeline.
+And last, specify the paths to required input files for the different steps of the pipeline.
 
 # Config file
 The main configurations of all inputs and the main analysis tools are defined via a config file (```config_template.yaml```). An example is provided in the ```config_template_example.yaml```.
