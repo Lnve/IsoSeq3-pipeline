@@ -17,9 +17,9 @@ The tool transdecoder [Transdecoder](https://github.com/TransDecoder/TransDecode
 To run the pipeline, create a snakemake 7 environment: ```mamba create -n snakemake7 snakemake=7.22 python=3.11```\
 Activate it using ```mamba activate snakemake7```\
 All packages for the Isoform identification, PASA and Transdecoder will be installed automatically.\
-For Sqanti,follow the official [installation instructions](https://github.com/ConesaLab/SQANTI3/wiki/Dependencies-and-installation).
+For Sqanti, follow the official [installation instructions](https://github.com/ConesaLab/SQANTI3/wiki/Dependencies-and-installation).
 
-Next, create the working directory you want to run the pipeline in and copy the following files to this directory:
+Next, create the working directory you want to run the pipeline in and copy the following files to this directory (or just clone this repo):
 - ```Snakefile```
 - ```config_template.yml```
   
