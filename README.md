@@ -21,7 +21,7 @@ For Sqanti,follow the official [installation instructions](https://github.com/Co
 
 Next, create the working directory you want to run the pipeline in and copy the following files to this directory:
 - ```Snakefile```
-- ```config_template.yml```
+- ```config_template.yml```\
 Then, copy the following folders with all files to the same directory:
 - ```rules/```
 - ```scripts/```
