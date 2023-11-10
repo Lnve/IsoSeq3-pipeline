@@ -1,0 +1,6 @@
+name: tama
+channels:
+  - bioconda
+dependencies:
+  - gs-tama
+

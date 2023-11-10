@@ -1,0 +1,10 @@
+name: pasa
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - transdecoder
+  - r-ggplot2
+  - pasa
+  - agat
+  - gmap

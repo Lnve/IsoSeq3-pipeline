@@ -1,0 +1,20 @@
+name: isoseq
+channels:
+  - anaconda
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - gffread
+  - isoseq3
+  - lima
+  - minimap2
+  - pbbam
+  - pbccs
+  - pbmm2
+  - python=3.9.15
+  - samtools=1.16.1
+  - scipy
+  - seqkit
+  - ncurses=6.3=h27087fc_1
+
