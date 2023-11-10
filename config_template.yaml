@@ -1,0 +1,129 @@
+#### general setup ####
+### paths
+# outdir :
+workdir : "/tmp/global2/lvaness/HYDRA"
+
+pools : ['pool1','pool2','pool3','pool4']
+
+### mappings
+# demultiplexing
+sample2pools : {'at6923':['pool1','pool4'],
+                'at6929':['pool1','pool4'],
+                'at7143':['pool1','pool4'],
+                'at8285':['pool1','pool4'],
+                'at9104':['pool1','pool4'],
+                'at9336':['pool1','pool4'],
+                'at9503':['pool1','pool4'],
+                'at9578':['pool1','pool4'],
+                'at9744':['pool2','pool4'],
+                'at9762':['pool2'],
+                'at9806':['pool2'],
+                'at9830':['pool2'],
+                'at9847':['pool2','pool4'],
+                'at9852':['pool2'],
+                'at9879':['pool2'],
+                'at9883':['pool2'],
+                'at9900':['pool3'],
+                'col0':['pool3'],
+                'Ha166-4':['pool3'],
+                'Ha495-1':['pool3'],
+                'Ha527-3':['pool3'],
+                'Ha527-3_sp':['pool3']}
+
+
+name2bc : [{'at6923':'bc1001_5p--bc1001_3p',
+            'at6929':'bc1002_5p--bc1002_3p',
+            'at7143':'bc1003_5p--bc1003_3p',
+            'at8285':'bc1008_5p--bc1008_3p',
+            'at9104':'bc1009_5p--bc1009_3p',
+            'at9336':'bc1010_5p--bc1010_3p',
+            'at9503':'bc1011_5p--bc1011_3p',
+            'at9578':'bc1012_5p--bc1012_3p'},
+            {'at9744':'bc1015_5p--bc1015_3p',
+            'at9762':'bc1016_5p--bc1016_3p',
+            'at9806':'bc1017_5p--bc1017_3p',
+            'at9830':'bc1018_5p--bc1018_3p',
+            'at9847':'bc1019_5p--bc1019_3p',
+            'at9852':'bc1020_5p--bc1020_3p',
+            'at9879':'bc1021_5p--bc1021_3p',
+            'at9883':'bc1022_5p--bc1022_3p'},
+            {'at9900':'bc1001_5p--bc1001_3p',
+            'col0':'bc1002_5p--bc1002_3p',
+            'Ha166-4':'bc1003_5p--bc1003_3p',
+            'Ha495-1':'bc1008_5p--bc1008_3p',
+            'Ha527-3':'bc1009_5p--bc1009_3p',
+            'Ha527-3_sp':'bc1010_5p--bc1010_3p'},
+            {'at6923':'bc1001_5p--bc1001_3p',
+            'at6929':'bc1002_5p--bc1002_3p',
+            'at7143':'bc1003_5p--bc1003_3p',
+            'at8285':'bc1008_5p--bc1008_3p',
+            'at9104':'bc1009_5p--bc1009_3p',
+            'at9336':'bc1010_5p--bc1010_3p',
+            'at9503':'bc1011_5p--bc1011_3p',
+            'at9578':'bc1012_5p--bc1012_3p',
+            'at9744':'bc1015_5p--bc1015_3p',
+            'at9847':'bc1019_5p--bc1019_3p'}]
+
+### Reference genomes
+# required wildcards in path: {sample}
+ref_genomes : "input/refs/{sample}.scaffolds-v2.3.fasta"
+
+### Reference annotations
+ref_annotations : "input/annotations/{tool}/{sample}.{tool}-v2.3.gtf"
+
+### Barcodes/Primers
+barcodes : "input/meta/pb16_barcodes_uniprimers.fasta"
+
+### Biosample
+biosamples : "input/meta/biosamp_{pool}.csv"
+
+########## Read preparation ##########
+
+### CCS
+ccs_subreads : "input/subreads/{pool}.subreads.subset.bam"
+ccs_threads : 64
+ccs_params : ""
+
+### Lima
+lima_params : "--isoseq --peek-guess --min-length 100"
+lima_threads : 10
+
+### Refine
+refine_params: "--require-polya"
+refine_threads : 4
+
+########## Isoform generation ##########
+
+version : "v2"
+#samples2map: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883','at9900','col0']
+samples2map: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883','at9900']
+
+#PB
+pbmm2 : "--preset ISOSEQ --sort"
+pb_c : "--do-not-collapse-extra-5exons --min-aln-identity 0.99 --max-fuzzy-junction 0 --max-5p-diff 10 --max-3p-diff 5"
+
+# collapsing
+minimap2 : "-ax splice:hq --secondary=no -MD -k 15 -w 5 -O 2,32 -E 1,0 -A 1 -B 2 -z 200,100 -r 200000 -g 2000 -C5 -G 200000"
+tama_c : "-x capped -a 10 -m 0 -z 5 -i 99 -sj sj_priority -sjt 10 -lde 2"
+
+########## SQANTI ##########
+#samples_sqanti: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883','at9900', 'col0']
+#samples_sqanti: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883','at9900']
+samples_sqanti: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883']
+sqanti_path: "/ebio/abt6/lvaness/software/SQANTI3-5.1/sqanti3_qc.py"
+
+########## PASA ##########
+pasa_set: ['set1']
+#samples_pasa: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883','at9900', 'col0']
+#samples_pasa: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883','at9900']
+samples_pasa: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883']
+
+### PASA configs
+config_align: "input/pasa_conf/pasa.alignAssembly.Template.txt"
+config_compare: "input/pasa_conf/pasa.annotationCompare.Template.txt"
+
+
+########## Transdecoder ##########
+#samples_transdecoder: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883','at9900', 'col0']
+#samples_transdecoder: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883','at9900']
+samples_transdecoder: ['at6923','at6929','at7143','at8285','at9104','at9336','at9503','at9578','at9744','at9762','at9806','at9830','at9847','at9852','at9879','at9883']

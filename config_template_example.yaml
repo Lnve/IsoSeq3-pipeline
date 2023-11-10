@@ -1,0 +1,134 @@
+#### general setup ####
+### paths
+# outdir :
+workdir : "/path/to/Snakefile"
+
+pools : ['pool1','pool2','pool3','pool4']
+
+### mappings
+# demultiplexing
+sample2pools : {'sample1':['pool1','pool4'],
+                'sample2':['pool1','pool4'],
+                'sample3':['pool1','pool4'],
+                'sample4':['pool1','pool4'],
+                'sample5':['pool1','pool4'],
+                'sample6':['pool1','pool4'],
+                'sample7':['pool1','pool4'],
+                'sample8':['pool1','pool4'],
+                'sample9':['pool2','pool4'],
+                'sample10':['pool2'],
+                'sample11':['pool2'],
+                'sample12':['pool2'],
+                'sample13':['pool2','pool4'],
+                'sample14':['pool2'],
+                'sample15':['pool2'],
+                'sample16':['pool2'],
+                'sample17':['pool3'],
+                'sample18':['pool3'],
+                'sample19':['pool3'],
+                'sample20':['pool3'],
+                'sample21':['pool3'],
+                'sample22':['pool3']}
+
+
+name2bc : [{'sample1':'bc1001_5p--bc1001_3p',
+            'sample2':'bc1002_5p--bc1002_3p',
+            'sample3':'bc1003_5p--bc1003_3p',
+            'sample4':'bc1008_5p--bc1008_3p',
+            'sample5':'bc1009_5p--bc1009_3p',
+            'sample6':'bc1010_5p--bc1010_3p',
+            'sample7':'bc1011_5p--bc1011_3p',
+            'sample8':'bc1012_5p--bc1012_3p'},
+            {'sample9':'bc1015_5p--bc1015_3p',
+            'sample10':'bc1016_5p--bc1016_3p',
+            'sample11':'bc1017_5p--bc1017_3p',
+            'sample12':'bc1018_5p--bc1018_3p',
+            'sample13':'bc1019_5p--bc1019_3p',
+            'sample14':'bc1020_5p--bc1020_3p',
+            'sample15':'bc1021_5p--bc1021_3p',
+            'sample16':'bc1022_5p--bc1022_3p'},
+            {'sample17':'bc1001_5p--bc1001_3p',
+            'sample18':'bc1002_5p--bc1002_3p',
+            'sample19':'bc1003_5p--bc1003_3p',
+            'sample20':'bc1008_5p--bc1008_3p',
+            'sample21':'bc1009_5p--bc1009_3p',
+            'sample22':'bc1010_5p--bc1010_3p'},
+            {'sample1':'bc1001_5p--bc1001_3p',
+            'sample2':'bc1002_5p--bc1002_3p',
+            'sample3':'bc1003_5p--bc1003_3p',
+            'sample4':'bc1008_5p--bc1008_3p',
+            'sample5':'bc1009_5p--bc1009_3p',
+            'sample6':'bc1010_5p--bc1010_3p',
+            'sample7':'bc1011_5p--bc1011_3p',
+            'sample8':'bc1012_5p--bc1012_3p',
+            'sample9':'bc1015_5p--bc1015_3p',
+            'sample13':'bc1019_5p--bc1019_3p'}]
+
+### Reference genomes
+# required wildcards in path: {sample}
+ref_genomes : "input/refs/{sample}.genome.fasta"
+
+### Reference annotations
+ref_annotations : "input/annotations/{tool}/{sample}.{tool}.gtf"
+
+### Barcodes/Primers
+barcodes : "input/meta/pb16_barcodes_uniprimers.fasta"
+
+### Biosample
+biosamples : "input/meta/biosamp_{pool}.csv"
+
+########## Read preparation ##########
+
+### CCS
+ccs_subreads : "input/subreads/{pool}.subreads.bam"
+ccs_threads : 64
+ccs_params : ""
+
+### Lima
+lima_params : "--isoseq --peek-guess --min-length 100"
+lima_threads : 10
+
+### Refine
+refine_params: "--require-polya"
+refine_threads : 4
+
+
+
+########## Isoform generation ##########
+
+version : "v2"
+#samples2map: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16','sample17','sample18']
+samples2map: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16','sample17']
+
+#PB
+pbmm2 : "--preset ISOSEQ --sort"
+pb_c : "--do-not-collapse-extra-5exons --min-aln-identity 0.99 --max-fuzzy-junction 0 --max-5p-diff 10 --max-3p-diff 5"
+
+# collapsing
+minimap2 : "-ax splice:hq --secondary=no -MD -k 15 -w 5 -O 2,32 -E 1,0 -A 1 -B 2 -z 200,100 -r 200000 -g 2000 -C5 -G 200000"
+tama_c : "-x capped -a 10 -m 0 -z 5 -i 99 -sj sj_priority -sjt 10 -lde 2"
+
+
+
+########## SQANTI ##########
+#samples_sqanti: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16','sample17', 'sample18']
+#samples_sqanti: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16','sample17']
+samples_sqanti: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16']
+sqanti_path: "/ebio/abt6/lvaness/software/SQANTI3-5.1/sqanti3_qc.py"
+
+########## PASA ##########
+pasa_set: ['set1']
+# pasa (only temporary, since we do not have a solution for the araport gff)
+#samples_pasa: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16','sample17', 'sample18']
+#samples_pasa: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16','sample17']
+samples_pasa: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16']
+
+### PASA configs
+config_align: "input/pasa_conf/pasa.alignAssembly.Template.txt"
+config_compare: "input/pasa_conf/pasa.annotationCompare.Template.txt"
+
+
+########## Transdecoder ##########
+#samples_transdecoder: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16','sample17', 'sample18']
+#samples_transdecoder: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16','sample17']
+samples_transdecoder: ['sample1','sample2','sample3','sample4','sample5','sample6','sample7','sample8','sample9','sample10','sample11','sample12','sample13','sample14','sample15','sample16']
