@@ -14,28 +14,30 @@ The second follow-up analysis uses the tool [PASA](https://github.com/PASApipeli
 The tool transdecoder [Transdecoder](https://github.com/TransDecoder/TransDecoder/wiki) identifies potential coding regions within the transcript sequences. Note, that the ```--complete_orfs_only``` flag will be used per default.
 
 # How to install
-To run the pipeline, create a snakemake 7 environment with the following command: ```mamba create -n snakemake7 snakemake=7.22 python=3.11```\
-Activate it using ```mamba activate snakemake7```
+To run the pipeline, create a snakemake 7 environment: ```mamba create -n snakemake7 snakemake=7.22 python=3.11```\
+Activate it using ```mamba activate snakemake7```\
+All packages for the Isoform identification, PASA and Transdecoder will be installed automatically.\
+For Sqanti,follow the official [installation instructions](https://github.com/ConesaLab/SQANTI3/wiki/Dependencies-and-installation).
 
-TODO:
-  - Make anaconda package from squanti
+Next, create the working directory you want to run the pipeline in and copy the following files to this directory:
+- ```Snakefile```
+- ```config_template.yml```
+And specify the paths to required input fields for the different steps of the pipeline.
 
 # Config file
-The main configurations of all inputs and the main analysis tools are defined via a config file (```config_template.yaml```).
+The main configurations of all inputs and the main analysis tools are defined via a config file (```config_template.yaml```). An example is provided in the ```config_template_example.yaml```.
 
 ### General setup
   - ```workdir```: All analyses will be done relative to the directory specified in ```workdir```. This directory also specifies the folder in which all required input files are stored.
-  - ```pools```: defines the pattern of individual SMRT-cell runs in list format which is used in the workflow to uniquely identify input files.
+  - ```pools```: defines the names of individual SMRT-cell runs in list format which is used in the workflow to uniquely identify input subread-files and demultiplexed outputs.
   - ```sample2pools```: is a dictionary of lists, mapping the sample IDs to the SMRT-cell run(s) in which they were pooled for sequencing.
-  - ```name2bc```: is a list of dictionaries. Each dictionary represents a pool (in the order defined in ```pools```) and maps the sample ID to their repsective barcode used in the SMRT-cell run
+  - ```name2bc```: is a list of dictionaries. Each dictionary represents a pool (in the order defined in ```pools```) and maps the sample ID to their repsective barcode used in the SMRT-cell run.
 
 ### General input files
-  - ```ref_genomes```: path to reference genomes using the ```{sample}``` pattern specified in the genral setup (required in all steps)
-  - ```ref_annotations```: path to reference annotations. required patterns are ```{sample}``` (corresponding to the ones specified in the general setup) and ```{tool}```, defining one or more techiques which were used to generate the respective reference annotation type. This allows to run follow up analyses with different reference analyses (used in follow up 1 and 2)
-  - ```barcodes```: barcode file, defining the sequences of 5``` and 3``` barcoded primers in fasta format. See the [PacBio CLI-workflow]https://isoseq.how/clustering/cli-workflow.html) for more details (required in the initial Isoform identification)
-  - ```biosamples```: One file per ```{pool}```, mapping the primer IDs to the sample name in the SMRT-cell run. See the [Lima documentation](https://lima.how/faq/biosample.html) for more information (required in the initial Isoform identification)
-  - ```pasa_align_cfg```: path to documentation
-  - ```pasa_align_cfg```: path to documentation
+  - ```ref_genomes```: path to reference genomes using the ```{sample}``` pattern specified in the general setup (required in all steps)
+  - ```ref_annotations```: path to reference annotations. required patterns are ```{sample}``` (corresponding to the ones specified in the general setup as well as their reference genomes) and ```{tool}```, defining one or more techiques which were used to generate the respective reference annotation type. This allows to run follow up analyses with different reference analyses (used in follow up 1 and 2). Even if only one annotation type is present, a general pattern has to be chosen here.
+  - ```barcodes```: barcode file, defining the sequences of 5' and 3' barcoded primers in fasta format. See the [PacBio CLI-workflow]https://isoseq.how/clustering/cli-workflow.html) for more details (required in the initial Isoform identification)
+  - ```biosamples```: One file per ```{pool}```, mapping the primer IDs to the sample name in the SMRT-cell run. See the [Lima documentation](https://lima.how/faq/biosample.html) for more information (required in the initial Isoform identification). See ```input/meta/biosample_pool1_example.csv```.
 
 ### CCS
   - ```ccs_subreads```: path to the subreads. ```{pool}``` is required.
@@ -61,6 +63,14 @@ The main configurations of all inputs and the main analysis tools are defined vi
 ### Isoform generation
 ```version```: If several collapsing parameters are tested (one at a time), a version can be specified (default "v1"). A subfolder will be created in the output directory for every version, in which all subsequent steps are stored.
 
+### Sqanti
+sqanti
+
+### PASA
+```pasa_set```: The parameter set used by PASA to integrate the isoforms into the reference annotations. Parameters are specified with ```pasa_params```
+```pasa_params```:TODO
+```config_align```: path/to/pasa.alignAssembly.Template.txt
+```config_compare```: path/to/pasa.annotationCompare.Template.txt
 
 ### Run
 Specify the config file to use on top of the ```Snakefile``` and then start the pipeline with the following command:
