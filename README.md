@@ -66,10 +66,10 @@ The main configurations of all inputs and the main analysis tools are defined vi
   - ```tama_c```: Tama collapsing parameters
 
 ### Isoform generation
-```version```: If several collapsing parameters are tested (one at a time), a version can be specified (default "v1"). A subfolder will be created in the output directory for every version, in which all subsequent steps are stored.
+  - ```version```: If several collapsing parameters are tested (one at a time), a version can be specified (default "v1"). A subfolder will be created in the output directory for every version, in which all subsequent steps are stored.
 
 ### Sqanti
-  - ```sqanti_path```: path to sqanti_qc.py
+  - ```sqanti_path```: path to sqanti_qc.py, depends on where the Sqanti is installed
     
 ### PASA
   - ```pasa_set```: The parameter set used by PASA to integrate the isoforms into the reference annotations. Parameters are specified with ```pasa_params```
