@@ -14,22 +14,17 @@ The second follow-up analysis uses the tool [PASA](https://github.com/PASApipeli
 The tool transdecoder [Transdecoder](https://github.com/TransDecoder/TransDecoder/wiki) identifies potential coding regions within the transcript sequences. Note, that the ```--complete_orfs_only``` flag will be used per default.
 
 # How to install
-To run the pipeline, create a snakemake 7 environment: ```mamba create -n snakemake7 snakemake=7.22 python=3.11```\
+To run the pipeline, create a snakemake 7 environment: ```mamba create -n snakemake7 snakemake=7.22 python=3.11``` (Make sure, mamba is installed)\
 Activate it using ```mamba activate snakemake7```\
 All packages for the Isoform identification, PASA and Transdecoder will be installed automatically.\
 For Sqanti, follow the official [installation instructions](https://github.com/ConesaLab/SQANTI3/wiki/Dependencies-and-installation).
 
-Skip the next steps if you downloaded the example tarball. In this case, only unpack it and run the pipeline through this command: ```snakemake -j N --use-conda```
-
-Next, create the working directory you want to run the pipeline in and copy the following files to this directory (or just clone this repo):
-- ```Snakefile```
-- ```config_template.yml```
+Download the tarball. In this case, only unpack it and run the pipeline through this command: ```snakemake -j N --use-conda``` (MAKE TARBALL MAIN INSTALLATION, ADD COMMAND TO UNZIP ```tar -xzvf TARBALL```)
+update tarball with pandas
   
-Then, copy the following folders with all files to the same directory:
-- ```rules/```
-- ```scripts/```
-  
-And last, specify the paths to required input files for the different steps of the pipeline.
+And last, specify the paths to required input files for the different steps of the pipeline. This is done via the config file
+add note, that installation takes a bit the first time
+add note, that the additional environments are installed (64200 files, 2.5Gb space)
 
 # Config file
 The main configurations of all inputs and the main analysis tools are defined via a config file (```config_template.yaml```). An example is provided in the ```config_template_example.yaml```.
