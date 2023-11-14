@@ -19,6 +19,8 @@ Activate it using ```mamba activate snakemake7```\
 All packages for the Isoform identification, PASA and Transdecoder will be installed automatically.\
 For Sqanti, follow the official [installation instructions](https://github.com/ConesaLab/SQANTI3/wiki/Dependencies-and-installation).
 
+Skip the next steps if you downloaded the example tarball. In this case, only unpack it and run the pipeline through this command: ```snakemake -j N --use-conda```
+
 Next, create the working directory you want to run the pipeline in and copy the following files to this directory (or just clone this repo):
 - ```Snakefile```
 - ```config_template.yml```
