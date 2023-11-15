@@ -23,8 +23,12 @@ Download the tarball. In this case, only unpack it and run the pipeline through 
 update tarball with pandas
   
 And last, specify the paths to required input files for the different steps of the pipeline. This is done via the config file
-add note, that installation takes a bit the first time
+add note, that installation takes a bit the first time, because of installing conda environments (as told by Snakemake in the terminal)
 add note, that the additional environments are installed (64200 files, 2.5Gb space)
+
+ADD TO ANNEX: 5deg sqanti files!
+add a path to subreads and demultiplexed concatenated read files.
+add drawio stuff
 
 # Config file
 The main configurations of all inputs and the main analysis tools are defined via a config file (```config_template.yaml```). An example is provided in the ```config_template_example.yaml```.
